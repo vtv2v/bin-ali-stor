@@ -1,0 +1,44 @@
+# Bin Ali Store - Development .htaccess
+# XAMPP/Localhost Configuration
+
+# Enable Rewrite Engine
+RewriteEngine On
+
+# URL Rewriting for Clean URLs (optional)
+# Exclude admin directory from rewriting
+RewriteCond %{REQUEST_URI} !^/mart3/admin/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^product/([^/]+)/?$ product.php?slug=$1 [L,QSA]
+
+RewriteCond %{REQUEST_URI} !^/mart3/admin/
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^category/([^/]+)/?$ category.php?slug=$1 [L,QSA]
+
+# Basic security for sensitive files
+<Files "*.sql">
+    Order allow,deny
+    Deny from all
+</Files>
+
+<Files "*.log">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# Prevent PHP execution in uploads directory
+<Files "uploads/*.php">
+    Order allow,deny
+    Deny from all
+</Files>
+
+# PHP Settings for development
+<IfModule mod_php.c>
+    php_value upload_max_filesize 5M
+    php_value post_max_size 8M
+    php_value max_execution_time 30
+    php_value memory_limit 128M
+    php_flag display_errors On
+    php_flag log_errors On
+</IfModule> 
